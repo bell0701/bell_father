@@ -1,99 +1,52 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>할아버지 안부 알리미</title>
-<meta name="theme-color" content="#4CAF50">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<!-- 실시간 통신 라이브러리 CDN -->
-<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
-<style>
-* { box-sizing: border-box; }
-body {
-font-family: -apple-system, sans-serif;
-text-align: center;
-background-color: #f4f7f6;
-margin: 0;
-min-height: 100vh;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-padding: 20px;
-}
-.card {
-background: white;
-border-radius: 24px;
-padding: 40px 25px;
-box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-width: 100%;
-max-width: 360px;
-}
-h1 { font-size: 26px; color: #333; margin-bottom: 10px; }
-p { font-size: 18px; color: #666; line-height: 1.5; }
-.status-badge {
-display: inline-block;
-margin-top: 20px;
-padding: 8px 18px;
-border-radius: 20px;
-background: #E8F5E9;
-color: #2E7D32;
-font-weight: bold;
-font-size: 15px;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>보호자용 안부 확인</title>
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+  <style>
+    body { font-family: -apple-system, sans-serif; text-align: center; background: #eef2f5; padding: 20px; }
+    .dashboard { background: white; padding: 30px; border-radius: 20px; max-width: 400px; margin: 0 auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    .status { font-size: 24px; font-weight: bold; margin: 20px 0; padding: 15px; border-radius: 12px; }
+    .active { background: #E8F5E9; color: #2E7D32; }
+    .inactive { background: #FFEBEE; color: #C62828; }
+    .time { color: #666; font-size: 14px; }
+  </style>
 </head>
 <body>
+  <div class="dashboard">
+    <h2>할아버지 스마트폰 상태</h2>
+    <div id="statusBox" class="status inactive">수신 대기 중...</div>
+    <div class="time" id="timeBox">마지막 신호: 없음</div>
+  </div>
 
-<div class="card">
-<h1>좋은 하루 되세요! 🌸</h1>
-<p>오늘도 건강하고<br>즐거운 시간 보내세요.</p>
-<div class="status-badge" id="statusBadge">연결 확인 중...</div>
-</div>
+  <script>
+    // 할아버지 앱과 반드시 동일한 ID를 입력하세요
+    const FAMILY_ID = "my_family_care_1234"; 
+    const TOPIC = `care_status/${FAMILY_ID}`;
+    
+    const client = mqtt.connect('wss://broker.emqx.io:8084/mqtt');
+    const statusBox = document.getElementById('statusBox');
+    const timeBox = document.getElementById('timeBox');
 
-<script>
-// ⭐ 보호자 앱과 동일한 고유 코드를 설정하세요 (영문/숫자 자유 입력)
-const FAMILY_ID = "my_family_care_1234";
-const TOPIC = care_status/${FAMILY_ID};
+    client.on('connect', () => {
+      client.subscribe(TOPIC);
+    });
 
-// 실시간 MQTT 브로커 연결 (무료 WSS)
-const client = mqtt.connect('wss://broker.emqx.io:8084/mqtt');
-const badge = document.getElementById('statusBadge');
-
-function sendStatus(state) {
-if (client.connected) {
-const data = JSON.stringify({
-status: state, // 'active' 또는 'screen_off'
-timestamp: new Date().toLocaleTimeString('ko-KR')
-});
-client.publish(TOPIC, data, { qos: 1 });
-}
-}
-
-client.on('connect', () => {
-badge.textContent = "🟢 정상 연결됨";
-sendStatus('active');
-});
-
-// 10초마다 활동 중 신호 전송
-setInterval(() => {
-if (document.visibilityState === 'visible') {
-sendStatus('active');
-}
-}, 10000);
-
-// 화면 켜짐/꺼짐 감지
-document.addEventListener('visibilitychange', () => {
-if (document.visibilityState === 'hidden') {
-sendStatus('screen_off');
-} else {
-sendStatus('active');
-}
-});
-
-window.addEventListener('pagehide', () => sendStatus('screen_off'));
-</script>
+    client.on('message', (topic, message) => {
+      const data = JSON.parse(message.toString());
+      
+      timeBox.textContent = `마지막 신호: ${data.timestamp}`;
+      
+      if (data.status === 'active') {
+        statusBox.textContent = "📱 현재 화면 보는 중";
+        statusBox.className = "status active";
+      } else if (data.status === 'screen_off') {
+        statusBox.textContent = "💤 화면 꺼짐";
+        statusBox.className = "status inactive";
+      }
+    });
+  </script>
 </body>
 </html>
