@@ -65,7 +65,7 @@ cursor: pointer;
 <script>
 // ⭐ 할아버지 앱의 FAMILY_ID와 반드시 일치해야 합니다.
 const FAMILY_ID = "my_family_care_1234";
-const TOPIC = care_status/${FAMILY_ID}`;
+const TOPIC = `care_status/${FAMILY_ID}`;
 
 const client = mqtt.connect('wss://broker.emqx.io:8084/mqtt');
 const statusBox = document.getElementById('statusBox');
@@ -85,7 +85,10 @@ clearTimeout(timeoutTimer);
 if (data.status === 'active') {
 statusBox.className = 'status-box active';
 statusText.textContent = '🟢 활동 중 (핸드폰 켜짐)';
-timeText.textContent = 최근 감지:${data.timestamp}; } else { setOffline('🔴 꺼짐 (화면 닫힘)'); timeText.textContent =꺼진 시간: ${data.timestamp}`;
+timeText.textContent = `최근 감지: ${data.timestamp}`; 
+} else { 
+setOffline('🔴 꺼짐 (화면 닫힘)'); 
+timeText.textContent = `꺼진 시간: ${data.timestamp}`;
 }
 
 // 25초 동안 신호가 없으면 자동으로 꺼짐 처리
