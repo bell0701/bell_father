@@ -221,6 +221,15 @@
             </div>
         </div>
 
+        <!-- 4. 모니터링 동작 상태 -->
+        <div class="status-card">
+            <div class="icon-box">🛡️</div>
+            <div class="info-box">
+                <h3>앱 모니터링 상태</h3>
+                <p id="monitoringText">데이터 불러오는 중...</p>
+            </div>
+        </div>
+
         <div class="footer">
             <div class="loading-spinner" id="spinner"></div>
             <span id="updateTime">데이터 연결 중...</span>
@@ -286,6 +295,15 @@
                             document.getElementById('screenText').innerHTML = `<span style="color: #4ade80;">화면 켜짐 (사용 중)</span>`;
                         } else {
                             document.getElementById('screenText').innerHTML = `<span style="color: #9ca3af;">화면 꺼짐 (대기 중)</span>`;
+                        }
+                    }
+
+                    // 앱 모니터링 상태 업데이트
+                    if (data.isMonitoring !== undefined) {
+                        if (data.isMonitoring) {
+                            document.getElementById('monitoringText').innerHTML = `<span style="color: #4ade80;">모니터링 작동 중 🟢</span>`;
+                        } else {
+                            document.getElementById('monitoringText').innerHTML = `<span style="color: var(--warning-color);">중지됨 🔴</span>`;
                         }
                     }
                 }
