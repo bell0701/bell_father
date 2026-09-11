@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>안심 모니터링 대시보드</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.8);
+            --safe-color: #4ade80;
+            --warning-color: #f87171;
+            --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #1e1b4b, #312e81, #4c1d95, #701a75);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-primary);
+            padding: 20px;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .dashboard-container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px 30px;
+            box-shadow: var(--card-shadow);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            background: linear-gradient(to right, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        .status-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .status-card:hover {
+            transform: translateY(-4px);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            margin-right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: inset 0 2px 4px rgba(255,255,255,0.1);
+        }
+
+        .info-box h3 {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-box p {
+            font-size: 22px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        .status-safe { color: var(--safe-color); background-color: var(--safe-color); }
+        .status-warning { color: var(--warning-color); background-color: var(--warning-color); }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(74, 222, 128, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 400px) {
+            .dashboard-container { padding: 30px 20px; }
+            .status-card { padding: 16px; }
+            .icon-box { width: 50px; height: 50px; font-size: 24px; margin-right: 16px; }
+            .info-box p { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <div class="header">
+            <h1>부모님 안심 모니터링</h1>
+            <p>실시간 상태 대시보드</p>
+        </div>
+
+        <!-- 1. 활성 상태 -->
+        <div class="status-card">
+            <div class="icon-box">🕒</div>
+            <div class="info-box">
+                <h3>최근 폰 사용 (활동)</h3>
+                <p id="lastActiveText">데이터 불러오는 중...</p>
+            </div>
+        </div>
+
+        <!-- 2. 위치 상태 -->
+        <div class="status-card">
+            <div class="icon-box">📍</div>
+            <div class="info-box">
+                <h3>현재 위치 상태</h3>
+                <p id="locationText">데이터 불러오는 중...</p>
+            </div>
+        </div>
+
+        <!-- 3. 화면 상태 -->
+        <div class="status-card">
+            <div class="icon-box">📱</div>
+            <div class="info-box">
+                <h3>현재 폰 화면 상태</h3>
+                <p id="screenText">데이터 불러오는 중...</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="loading-spinner" id="spinner"></div>
+            <span id="updateTime">데이터 연결 중...</span>
+        </div>
+    </div>
+
+    <script>
+        // Firebase RTDB URL (앱 코드에서 추출)
+        const FIREBASE_URL = "https://father-1b787-default-rtdb.firebaseio.com/status.json?auth=eyJhbGciOiJSUzI1NiIsImtpZCI6IjI0N2Y4MDYwMDM5YjVmNDBkOTQ5NjkzOGJiMTg5NzA2ZWY4ODkzM2QiLCJ0eXAiOiJKV1QifQ.eyJwcm92aWRlcl9pZCI6ImFub255bW91cyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9mYXRoZXItMWI3ODciLCJhdWQiOiJmYXRoZXItMWI3ODciLCJhdXRoX3RpbWUiOjE3ODg0OTM3MDgsInVzZXJfaWQiOiJobndNVm9DT3hQZUpYS1FlcVhBMk1pRVljcU0yIiwic3ViIjoiaG53TVZvQ094UGVKWEtRZXFYQTJNaUVZY3FNMiIsImlhdCI6MTc4ODQ5MzcwOCwiZXhwIjoxNzg4NDk3MzA4LCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7fSwic2lnbl9pbl9wcm92aWRlciI6ImFub255bW91cyJ9fQ.nOa0QznCV7cFB8xzDogAU1ACrTKSqlZotNGYFCHZqVwnQ-4nBDujKpzxi_yszg7Iip5gZKFJKMTJI-czSlJbJeINpBpFrYYf1P8JVvEAH3NPiwhsHWhzkl1nlkAK1VVzhtx0x3fK5IWgnTo7EJ84Lf0K_xReNWRn0lZxkawyZl3weMRdaH_x8F-TIutUm7UHTnohLw2yzgOINLKmvM8HSnzhJBmtziovb4FWTaK3DM2ytGr193ZirFGuVU2tbbSFUSobja4z49Rsirx7UZTN9oYD2RZclMpRJQ_ucz7FEJ1u3e0G1CuU7-jtMPpOfh9UpbFFWsr50VZw4yZNFOfyaA";
+
+        function formatRelativeTime(timestamp) {
+            const now = Date.now();
+            const diffMin = Math.floor((now - timestamp) / (1000 * 60));
+            const diffHour = Math.floor(diffMin / 60);
+
+            if (diffMin < 1) return "방금 전";
+            if (diffMin < 60) return `${diffMin}분 전`;
+            if (diffHour < 24) return `${diffHour}시간 전`;
+            return `${Math.floor(diffHour/24)}일 전`;
+        }
+
+        function formatExactTime(timestamp) {
+            const date = new Date(timestamp);
+            const isToday = new Date().toDateString() === date.toDateString();
+            const timeStr = date.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+            return isToday ? `오늘 ${timeStr}` : `${date.getMonth()+1}월 ${date.getDate()}일 ${timeStr}`;
+        }
+
+        async function fetchStatus() {
+            try {
+                const response = await fetch(FIREBASE_URL);
+                if (!response.ok) throw new Error("네트워크 응답 오류");
+                
+                const data = await response.json();
+                
+                if (data) {
+                    // 활동 시간 업데이트
+                    if (data.lastActive) {
+                        const timeDiff = Date.now() - data.lastActive;
+                        const isRecent = timeDiff < (1000 * 60 * 60 * 3); // 3시간 이내면 안전
+                        
+                        const indicatorClass = isRecent ? 'status-safe pulse' : 'status-warning';
+                        const timeStr = formatRelativeTime(data.lastActive);
+                        const exactStr = formatExactTime(data.lastActive);
+                        
+                        document.getElementById('lastActiveText').innerHTML = 
+                            `<span class="status-indicator ${indicatorClass}"></span>
+                             <span title="${exactStr}">${timeStr} 활동</span>`;
+                    }
+
+                    // 위치 업데이트
+                    if (data.isHome !== undefined) {
+                        if (data.isHome) {
+                            document.getElementById('locationText').innerHTML = `집 (Wi-Fi 연결됨) 🏡`;
+                        } else {
+                            document.getElementById('locationText').innerHTML = `외출 중 🚶‍♂️`;
+                        }
+                    }
+
+                    // 화면 켬/끔 업데이트
+                    if (data.isScreenOn !== undefined) {
+                        if (data.isScreenOn) {
+                            document.getElementById('screenText').innerHTML = `<span style="color: #4ade80;">화면 켜짐 (사용 중)</span>`;
+                        } else {
+                            document.getElementById('screenText').innerHTML = `<span style="color: #9ca3af;">화면 꺼짐 (대기 중)</span>`;
+                        }
+                    }
+                }
+
+                // 업데이트 시간 갱신
+                const nowStr = new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                document.getElementById('updateTime').textContent = `마지막 업데이트: ${nowStr}`;
+                
+                // 에러 후 복구시 스피너 애니메이션 재개
+                document.getElementById('spinner').style.animation = 'spin 1s ease-in-out infinite';
+                document.getElementById('spinner').style.borderColor = 'rgba(255,255,255,0.3)';
+                document.getElementById('spinner').style.borderTopColor = '#fff';
+
+            } catch (error) {
+                console.error("데이터 로드 실패:", error);
+                document.getElementById('updateTime').textContent = "연결 실패. 재시도 중...";
+                // 에러시 스피너 멈춤 및 빨간색 표시
+                document.getElementById('spinner').style.animation = 'none';
+                document.getElementById('spinner').style.borderColor = 'var(--warning-color)';
+            }
+        }
+
+        // 초기 로딩
+        fetchStatus();
+
+        // 10초마다 자동 갱신
+        setInterval(fetchStatus, 10000);
+
+        // 브라우저 탭이 다시 화면에 보일 때 즉시 갱신
+        document.addEventListener("visibilitychange", () => {
+            if (document.visibilityState === "visible") {
+                fetchStatus();
+            }
+        });
+    </script>
+</body>
+</html>
