@@ -194,17 +194,9 @@
             <p>실시간 상태 대시보드</p>
         </div>
 
-        <!-- 1. 활성 상태 -->
-        <div class="status-card">
-            <div class="icon-box">🕒</div>
-            <div class="info-box">
-                <h3>최근 폰 사용 (활동)</h3>
-                <p id="lastActiveText">데이터 불러오는 중...</p>
-            </div>
-        </div>
 
         <!-- 2. 위치 상태 -->
-        <div class="status-card">
+        <div class="status-card" id="locationCard">
             <div class="icon-box">📍</div>
             <div class="info-box">
                 <h3>현재 위치 상태</h3>
@@ -213,7 +205,7 @@
         </div>
 
         <!-- 3. 화면 상태 -->
-        <div class="status-card">
+        <div class="status-card" id="screenCard">
             <div class="icon-box">📱</div>
             <div class="info-box">
                 <h3>현재 폰 화면 상태</h3>
@@ -266,20 +258,6 @@
                 const data = await response.json();
                 
                 if (data) {
-                    // 활동 시간 업데이트
-                    if (data.lastActive) {
-                        const timeDiff = Date.now() - data.lastActive;
-                        const isRecent = timeDiff < (1000 * 60 * 60 * 3); // 3시간 이내면 안전
-                        
-                        const indicatorClass = isRecent ? 'status-safe pulse' : 'status-warning';
-                        const timeStr = formatRelativeTime(data.lastActive);
-                        const exactStr = formatExactTime(data.lastActive);
-                        
-                        document.getElementById('lastActiveText').innerHTML = 
-                            `<span class="status-indicator ${indicatorClass}"></span>
-                             <span title="${exactStr}">${timeStr} 활동</span>`;
-                    }
-
                     // 위치 업데이트
                     if (data.isHome !== undefined) {
                         if (data.isHome) {
@@ -289,21 +267,48 @@
                         }
                     }
 
-                    // 화면 켬/끔 업데이트
+                    // 화면 켬/끔 및 지속 시간 업데이트
                     if (data.isScreenOn !== undefined) {
-                        if (data.isScreenOn) {
-                            document.getElementById('screenText').innerHTML = `<span style="color: #4ade80;">화면 켜짐 (사용 중)</span>`;
+                        let durationStr = "";
+                        const suffix = data.isScreenOn ? "사용 중" : "대기 중";
+                        
+                        if (data.screenStateChangedAt) {
+                            const diffMs = Date.now() - data.screenStateChangedAt;
+                            const diffMins = Math.floor(diffMs / (1000 * 60));
+                            if (diffMins < 60) {
+                                durationStr = `(${diffMins}분 ${suffix})`;
+                            } else {
+                                const diffHours = Math.floor(diffMins / 60);
+                                const remMins = diffMins % 60;
+                                if (remMins === 0) {
+                                    durationStr = `(${diffHours}시간 ${suffix})`;
+                                } else {
+                                    durationStr = `(${diffHours}시간 ${remMins}분 ${suffix})`;
+                                }
+                            }
                         } else {
-                            document.getElementById('screenText').innerHTML = `<span style="color: #9ca3af;">화면 꺼짐 (대기 중)</span>`;
+                            durationStr = `(0분 ${suffix})`;
+                        }
+
+                        if (data.isScreenOn) {
+                            document.getElementById('screenText').innerHTML = `<span style="color: #4ade80;">화면 켜짐${durationStr}</span>`;
+                        } else {
+                            document.getElementById('screenText').innerHTML = `<span style="color: #9ca3af;">화면꺼짐${durationStr}</span>`;
                         }
                     }
 
                     // 앱 모니터링 상태 업데이트
                     if (data.isMonitoring !== undefined) {
+                        const locCard = document.getElementById('locationCard');
+                        const scrCard = document.getElementById('screenCard');
                         if (data.isMonitoring) {
                             document.getElementById('monitoringText').innerHTML = `<span style="color: #4ade80;">모니터링 작동 중 🟢</span>`;
+                            if(locCard) { locCard.style.opacity = '1'; locCard.style.filter = 'none'; }
+                            if(scrCard) { scrCard.style.opacity = '1'; scrCard.style.filter = 'none'; }
                         } else {
                             document.getElementById('monitoringText').innerHTML = `<span style="color: var(--warning-color);">중지됨 🔴</span>`;
+                            if(locCard) { locCard.style.opacity = '0.4'; locCard.style.filter = 'grayscale(100%)'; }
+                            if(scrCard) { scrCard.style.opacity = '0.4'; scrCard.style.filter = 'grayscale(100%)'; }
                         }
                     }
                 }
