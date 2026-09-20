@@ -184,6 +184,50 @@
             .icon-box { width: 50px; height: 50px; font-size: 24px; margin-right: 16px; }
             .info-box p { font-size: 18px; }
         }
+
+        /* User Input Styles */
+        .user-input-container {
+            margin-bottom: 24px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .user-input {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .user-input:focus {
+            border-color: var(--safe-color);
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        .user-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+        
+        .btn-search {
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: none;
+            background: var(--safe-color);
+            color: #000;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-search:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
@@ -194,6 +238,11 @@
             <p>실시간 상태 대시보드</p>
         </div>
 
+        <!-- 1. 사용자 입력 -->
+        <div class="user-input-container">
+            <input type="text" id="targetUser" class="user-input" placeholder="확인할 기기 이름 (예: 할아버지 폰)" value="">
+            <button class="btn-search" onclick="manualFetch()">조회</button>
+        </div>
 
         <!-- 2. 위치 상태 -->
         <div class="status-card" id="locationCard">
@@ -251,8 +300,22 @@
         }
 
         async function fetchStatus() {
+            const userNameInput = document.getElementById('targetUser').value.trim();
+            if (!userNameInput) {
+                document.getElementById('updateTime').textContent = "기기 이름을 입력해주세요.";
+                document.getElementById('locationText').innerHTML = `대기 중`;
+                document.getElementById('screenText').innerHTML = `대기 중`;
+                document.getElementById('monitoringText').innerHTML = `대기 중`;
+                // 스피너 멈춤
+                document.getElementById('spinner').style.animation = 'none';
+                return;
+            }
+            
+            // 동적 URL 생성
+            const dynamicUrl = `https://father-1b787-default-rtdb.firebaseio.com/users/${encodeURIComponent(userNameInput)}/status.json?auth=eyJhbGciOiJSUzI1NiIsImtpZCI6IjI0N2Y4MDYwMDM5YjVmNDBkOTQ5NjkzOGJiMTg5NzA2ZWY4ODkzM2QiLCJ0eXAiOiJKV1QifQ.eyJwcm92aWRlcl9pZCI6ImFub255bW91cyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9mYXRoZXItMWI3ODciLCJhdWQiOiJmYXRoZXItMWI3ODciLCJhdXRoX3RpbWUiOjE3ODg0OTM3MDgsInVzZXJfaWQiOiJobndNVm9DT3hQZUpYS1FlcVhBMk1pRVljcU0yIiwic3ViIjoiaG53TVZvQ094UGVKWEtRZXFYQTJNaUVZY3FNMiIsImlhdCI6MTc4ODQ5MzcwOCwiZXhwIjoxNzg4NDk3MzA4LCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7fSwic2lnbl9pbl9wcm92aWRlciI6ImFub255bW91cyJ9fQ.nOa0QznCV7cFB8xzDogAU1ACrTKSqlZotNGYFCHZqVwnQ-4nBDujKpzxi_yszg7Iip5gZKFJKMTJI-czSlJbJeINpBpFrYYf1P8JVvEAH3NPiwhsHWhzkl1nlkAK1VVzhtx0x3fK5IWgnTo7EJ84Lf0K_xReNWRn0lZxkawyZl3weMRdaH_x8F-TIutUm7UHTnohLw2yzgOINLKmvM8HSnzhJBmtziovb4FWTaK3DM2ytGr193ZirFGuVU2tbbSFUSobja4z49Rsirx7UZTN9oYD2RZclMpRJQ_ucz7FEJ1u3e0G1CuU7-jtMPpOfh9UpbFFWsr50VZw4yZNFOfyaA`;
+
             try {
-                const response = await fetch(FIREBASE_URL);
+                const response = await fetch(dynamicUrl);
                 if (!response.ok) throw new Error("네트워크 응답 오류");
                 
                 const data = await response.json();
@@ -311,6 +374,10 @@
                             if(scrCard) { scrCard.style.opacity = '0.4'; scrCard.style.filter = 'grayscale(100%)'; }
                         }
                     }
+                } else {
+                    document.getElementById('locationText').innerHTML = `데이터 없음`;
+                    document.getElementById('screenText').innerHTML = `데이터 없음`;
+                    document.getElementById('monitoringText').innerHTML = `데이터 없음`;
                 }
 
                 // 업데이트 시간 갱신
@@ -331,11 +398,29 @@
             }
         }
 
+        function manualFetch() {
+            fetchStatus();
+        }
+
+        // URL 파라미터에서 사용자 이름 자동 입력 처리 (옵션)
+        const urlParams = new URLSearchParams(window.location.search);
+        const userParam = urlParams.get('user');
+        if (userParam) {
+            document.getElementById('targetUser').value = userParam;
+        }
+
         // 초기 로딩
         fetchStatus();
 
         // 10초마다 자동 갱신
         setInterval(fetchStatus, 10000);
+
+        // 엔터 키로 조회
+        document.getElementById('targetUser').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                manualFetch();
+            }
+        });
 
         // 브라우저 탭이 다시 화면에 보일 때 즉시 갱신
         document.addEventListener("visibilitychange", () => {
