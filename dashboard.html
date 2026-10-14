@@ -243,6 +243,217 @@
             opacity: 0.9;
             transform: translateY(-2px);
         }
+
+        /* SMS Alert Section Styles */
+        .sms-card-container {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .sms-card-container:hover {
+            background: rgba(0, 0, 0, 0.25);
+        }
+
+        .sms-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .sms-title-box {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .sms-badge-count {
+            background: rgba(250, 204, 21, 0.2);
+            color: #facc15;
+            border: 1px solid rgba(250, 204, 21, 0.4);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .sms-action-toolbar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 14px;
+            align-items: center;
+        }
+
+        .sms-date-select {
+            flex: 1;
+            padding: 9px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--glass-border);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 13px;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sms-date-select:focus {
+            border-color: var(--safe-color);
+        }
+
+        .sms-date-select option {
+            background: #2a2a2a;
+            color: white;
+        }
+
+        .btn-delete-sms {
+            padding: 9px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(248, 113, 113, 0.4);
+            background: rgba(248, 113, 113, 0.15);
+            color: #fca5a5;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-delete-sms:hover {
+            background: rgba(248, 113, 113, 0.3);
+            color: #ffffff;
+            border-color: #f87171;
+            transform: translateY(-1px);
+        }
+
+        .sms-list-scroll {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sms-list-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .sms-list-scroll::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+        .sms-list-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        .sms-date-group {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        .sms-date-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-primary);
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 10px;
+        }
+
+        .btn-date-del {
+            background: rgba(248, 113, 113, 0.1);
+            border: 1px solid rgba(248, 113, 113, 0.3);
+            color: #fca5a5;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 3px 8px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-date-del:hover {
+            background: rgba(248, 113, 113, 0.25);
+            color: #fff;
+        }
+
+        .sms-item-card {
+            background: rgba(0, 0, 0, 0.28);
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            border-left: 3px solid #facc15;
+            transition: background 0.2s;
+        }
+
+        .sms-item-card:hover {
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .sms-item-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .sms-item-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+
+        .sms-keyword-tag {
+            color: #facc15;
+            font-weight: bold;
+            margin-right: 6px;
+        }
+
+        .sms-sender-text {
+            color: white;
+            font-weight: 600;
+        }
+
+        .sms-time-text {
+            color: #9ca3af;
+            font-size: 12px;
+        }
+
+        .btn-item-del {
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            color: #9ca3af;
+            font-size: 11px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .btn-item-del:hover {
+            background: rgba(248, 113, 113, 0.3);
+            color: #f87171;
+        }
+
+        .sms-content-text {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.45;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
     </style>
 </head>
 <body>
@@ -288,13 +499,32 @@
             </div>
         </div>
 
-        <!-- 5. 중요 문자 감지 알림 -->
-        <div class="status-card" id="smsCard">
-            <div class="icon-box">📩</div>
-            <div class="info-box" style="flex: 1;">
-                <h3>최근 중요 문자 감지</h3>
-                <p id="smsText" style="font-size: 16px;">데이터 불러오는 중...</p>
-                <div id="smsDetail" style="margin-top: 6px; font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.4; display: none; background: rgba(0,0,0,0.25); padding: 8px 12px; border-radius: 8px; word-break: break-all;"></div>
+        <!-- 5. 중요 문자 감지 내역 (일자별 정리 및 삭제 지원) -->
+        <div class="sms-card-container" id="smsCard">
+            <div class="sms-header-row">
+                <div class="sms-title-box">
+                    <div class="icon-box" style="width: 48px; height: 48px; font-size: 24px; margin-right: 0;">📩</div>
+                    <div>
+                        <h3 style="font-size: 14px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;">중요 문자 감지 내역</h3>
+                        <div style="display: flex; align-items: center; gap: 8px; margin-top: 2px;">
+                            <span id="smsTotalCount" class="sms-badge-count">총 0건</span>
+                            <span id="smsLastTime" style="font-size: 12px; color: #9ca3af;"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 일자 선택 및 삭제 툴바 -->
+            <div class="sms-action-toolbar">
+                <select id="smsDateFilter" class="sms-date-select" onchange="onSmsDateFilterChange()">
+                    <option value="ALL">전체 일자 보기</option>
+                </select>
+                <button class="btn-delete-sms" onclick="deleteSelectedDate()" title="선택한 일자의 문자를 모두 삭제합니다">선택 일자 삭제 🗑️</button>
+            </div>
+
+            <!-- 일자별 문자 목록 영역 -->
+            <div class="sms-list-scroll" id="smsListContainer">
+                <p style="color: #9ca3af; text-align: center; padding: 20px 0; font-size: 14px;">데이터 불러오는 중...</p>
             </div>
         </div>
 
@@ -305,8 +535,8 @@
     </div>
 
     <script>
-        // Firebase RTDB URL (앱 코드에서 추출)
-        const FIREBASE_URL = "https://father-1b787-default-rtdb.firebaseio.com/status.json?auth=eyJhbGciOiJSUzI1NiIsImtpZCI6IjI0N2Y4MDYwMDM5YjVmNDBkOTQ5NjkzOGJiMTg5NzA2ZWY4ODkzM2QiLCJ0eXAiOiJKV1QifQ.eyJwcm92aWRlcl9pZCI6ImFub255bW91cyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9mYXRoZXItMWI3ODciLCJhdWQiOiJmYXRoZXItMWI3ODciLCJhdXRoX3RpbWUiOjE3ODg0OTM3MDgsInVzZXJfaWQiOiJobndNVm9DT3hQZUpYS1FlcVhBMk1pRVljcU0yIiwic3ViIjoiaG53TVZvQ094UGVKWEtRZXFYQTJNaUVZY3FNMiIsImlhdCI6MTc4ODQ5MzcwOCwiZXhwIjoxNzg4NDk3MzA4LCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7fSwic2lnbl9pbl9wcm92aWRlciI6ImFub255bW91cyJ9fQ.nOa0QznCV7cFB8xzDogAU1ACrTKSqlZotNGYFCHZqVwnQ-4nBDujKpzxi_yszg7Iip5gZKFJKMTJI-czSlJbJeINpBpFrYYf1P8JVvEAH3NPiwhsHWhzkl1nlkAK1VVzhtx0x3fK5IWgnTo7EJ84Lf0K_xReNWRn0lZxkawyZl3weMRdaH_x8F-TIutUm7UHTnohLw2yzgOINLKmvM8HSnzhJBmtziovb4FWTaK3DM2ytGr193ZirFGuVU2tbbSFUSobja4z49Rsirx7UZTN9oYD2RZclMpRJQ_ucz7FEJ1u3e0G1CuU7-jtMPpOfh9UpbFFWsr50VZw4yZNFOfyaA";
+        const FIREBASE_AUTH = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjI0N2Y4MDYwMDM5YjVmNDBkOTQ5NjkzOGJiMTg5NzA2ZWY4ODkzM2QiLCJ0eXAiOiJKV1QifQ.eyJwcm92aWRlcl9pZCI6ImFub255bW91cyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9mYXRoZXItMWI3ODciLCJhdWQiOiJmYXRoZXItMWI3ODciLCJhdXRoX3RpbWUiOjE3ODg0OTM3MDgsInVzZXJfaWQiOiJobndNVm9DT3hQZUpYS1FlcVhBMk1pRVljcU0yIiwic3ViIjoiaG53TVZvQ094UGVKWEtRZXFYQTJNaUVZY3FNMiIsImlhdCI6MTc4ODQ5MzcwOCwiZXhwIjoxNzg4NDk3MzA4LCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7fSwic2lnbl9pbl9wcm92aWRlciI6ImFub255bW91cyJ9fQ.nOa0QznCV7cFB8xzDogAU1ACrTKSqlZotNGYFCHZqVwnQ-4nBDujKpzxi_yszg7Iip5gZKFJKMTJI-czSlJbJeINpBpFrYYf1P8JVvEAH3NPiwhsHWhzkl1nlkAK1VVzhtx0x3fK5IWgnTo7EJ84Lf0K_xReNWRn0lZxkawyZl3weMRdaH_x8F-TIutUm7UHTnohLw2yzgOINLKmvM8HSnzhJBmtziovb4FWTaK3DM2ytGr193ZirFGuVU2tbbSFUSobja4z49Rsirx7UZTN9oYD2RZclMpRJQ_ucz7FEJ1u3e0G1CuU7-jtMPpOfh9UpbFFWsr50VZw4yZNFOfyaA";
+        let currentSmsList = [];
 
         function formatRelativeTime(timestamp) {
             const now = Date.now();
@@ -334,24 +564,28 @@
                 document.getElementById('locationText').innerHTML = `대기 중`;
                 document.getElementById('screenText').innerHTML = `대기 중`;
                 document.getElementById('monitoringText').innerHTML = `대기 중`;
-                document.getElementById('smsText').innerHTML = `대기 중`;
-                document.getElementById('smsDetail').style.display = 'none';
+                document.getElementById('smsTotalCount').textContent = `총 0건`;
+                document.getElementById('smsLastTime').textContent = "";
+                document.getElementById('smsListContainer').innerHTML = `<p style="color: #9ca3af; text-align: center; padding: 20px 0; font-size: 14px;">기기를 선택해주세요.</p>`;
                 // 스피너 멈춤
                 document.getElementById('spinner').style.animation = 'none';
                 return;
             }
             
-            // 동적 URL 생성
-            const dynamicUrl = `https://father-1b787-default-rtdb.firebaseio.com/users/${encodeURIComponent(userNameInput)}/status.json?auth=eyJhbGciOiJSUzI1NiIsImtpZCI6IjI0N2Y4MDYwMDM5YjVmNDBkOTQ5NjkzOGJiMTg5NzA2ZWY4ODkzM2QiLCJ0eXAiOiJKV1QifQ.eyJwcm92aWRlcl9pZCI6ImFub255bW91cyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9mYXRoZXItMWI3ODciLCJhdWQiOiJmYXRoZXItMWI3ODciLCJhdXRoX3RpbWUiOjE3ODg0OTM3MDgsInVzZXJfaWQiOiJobndNVm9DT3hQZUpYS1FlcVhBMk1pRVljcU0yIiwic3ViIjoiaG53TVZvQ094UGVKWEtRZXFYQTJNaUVZY3FNMiIsImlhdCI6MTc4ODQ5MzcwOCwiZXhwIjoxNzg4NDk3MzA4LCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7fSwic2lnbl9pbl9wcm92aWRlciI6ImFub255bW91cyJ9fQ.nOa0QznCV7cFB8xzDogAU1ACrTKSqlZotNGYFCHZqVwnQ-4nBDujKpzxi_yszg7Iip5gZKFJKMTJI-czSlJbJeINpBpFrYYf1P8JVvEAH3NPiwhsHWhzkl1nlkAK1VVzhtx0x3fK5IWgnTo7EJ84Lf0K_xReNWRn0lZxkawyZl3weMRdaH_x8F-TIutUm7UHTnohLw2yzgOINLKmvM8HSnzhJBmtziovb4FWTaK3DM2ytGr193ZirFGuVU2tbbSFUSobja4z49Rsirx7UZTN9oYD2RZclMpRJQ_ucz7FEJ1u3e0G1CuU7-jtMPpOfh9UpbFFWsr50VZw4yZNFOfyaA`;
+            // 사용자 전체 데이터(상태 및 SMS 알림 로그) 조회 URL
+            const userUrl = `https://father-1b787-default-rtdb.firebaseio.com/users/${encodeURIComponent(userNameInput)}.json?auth=${FIREBASE_AUTH}`;
 
             try {
-                const response = await fetch(dynamicUrl);
+                const response = await fetch(userUrl);
                 if (!response.ok) throw new Error("네트워크 응답 오류");
                 
-                const data = await response.json();
+                const userData = await response.json();
                 
-                if (data) {
-                    // 위치 업데이트
+                if (userData) {
+                    const data = userData.status || {};
+                    const smsAlertsData = userData.smsAlerts || null;
+
+                    // 1. 위치 업데이트
                     if (data.isHome !== undefined) {
                         if (data.isHome) {
                             document.getElementById('locationText').innerHTML = `집 (Wi-Fi 연결됨) 🏡`;
@@ -360,7 +594,7 @@
                         }
                     }
 
-                    // 화면 켬/끔 및 지속 시간 업데이트
+                    // 2. 화면 켬/끔 및 지속 시간 업데이트
                     if (data.isScreenOn !== undefined) {
                         let durationStr = "";
                         const suffix = data.isScreenOn ? "사용 중" : "대기 중";
@@ -390,7 +624,7 @@
                         }
                     }
 
-                    // 앱 모니터링 상태 업데이트
+                    // 3. 앱 모니터링 상태 업데이트
                     if (data.isMonitoring !== undefined) {
                         const locCard = document.getElementById('locationCard');
                         const scrCard = document.getElementById('screenCard');
@@ -404,25 +638,17 @@
                             if(scrCard) { scrCard.style.opacity = '0.4'; scrCard.style.filter = 'grayscale(100%)'; }
                         }
                     }
-                    // 중요 문자 감지 알림 업데이트
-                    const smsText = document.getElementById('smsText');
-                    const smsDetail = document.getElementById('smsDetail');
-                    if (data.lastSmsAlert) {
-                        const alert = data.lastSmsAlert;
-                        const relTime = formatRelativeTime(alert.timestamp);
-                        smsText.innerHTML = `<span style="color: #facc15; font-weight: bold;">[${alert.keyword}]</span> ${alert.sender} <span style="font-size: 13px; color: #9ca3af;">(${relTime})</span>`;
-                        smsDetail.style.display = 'block';
-                        smsDetail.textContent = alert.body;
-                    } else {
-                        smsText.innerHTML = `<span style="color: #9ca3af;">감지된 중요 문자 없음</span>`;
-                        smsDetail.style.display = 'none';
-                    }
+
+                    // 4. 중요 문자 감지 내역 (일자별 정리)
+                    processAndRenderSms(smsAlertsData, data.lastSmsAlert);
+
                 } else {
                     document.getElementById('locationText').innerHTML = `데이터 없음`;
                     document.getElementById('screenText').innerHTML = `데이터 없음`;
                     document.getElementById('monitoringText').innerHTML = `데이터 없음`;
-                    document.getElementById('smsText').innerHTML = `데이터 없음`;
-                    document.getElementById('smsDetail').style.display = 'none';
+                    document.getElementById('smsTotalCount').textContent = `총 0건`;
+                    document.getElementById('smsLastTime').textContent = "";
+                    document.getElementById('smsListContainer').innerHTML = `<p style="color: #9ca3af; text-align: center; padding: 20px 0; font-size: 14px;">데이터 없음</p>`;
                 }
 
                 // 업데이트 시간 갱신
@@ -440,6 +666,299 @@
                 // 에러시 스피너 멈춤 및 빨간색 표시
                 document.getElementById('spinner').style.animation = 'none';
                 document.getElementById('spinner').style.borderColor = 'var(--warning-color)';
+            }
+        }
+
+        // --- 중요 문자 일자별 정리 및 삭제 로직 ---
+
+        function processAndRenderSms(smsAlertsData, lastSmsAlert) {
+            const list = [];
+            if (smsAlertsData && typeof smsAlertsData === 'object') {
+                Object.entries(smsAlertsData).forEach(([key, val]) => {
+                    if (val && typeof val === 'object') {
+                        let dateStr = "";
+                        if (val.timeString && val.timeString.includes(' ')) {
+                            dateStr = val.timeString.split(' ')[0];
+                        } else if (val.timestamp) {
+                            const d = new Date(val.timestamp);
+                            dateStr = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+                        } else {
+                            dateStr = "기타";
+                        }
+                        list.push({
+                            key: key,
+                            raw: val,
+                            sender: val.sender || "알 수 없음",
+                            body: val.body || "",
+                            keyword: val.keyword || "",
+                            timestamp: val.timestamp || 0,
+                            timeString: val.timeString || "",
+                            dateStr: dateStr
+                        });
+                    }
+                });
+            }
+
+            // 만약 smsAlerts 목록이 비어있고 status에 lastSmsAlert만 남아있는 경우 대비
+            if (list.length === 0 && lastSmsAlert && typeof lastSmsAlert === 'object') {
+                let dateStr = "";
+                if (lastSmsAlert.timeString && lastSmsAlert.timeString.includes(' ')) {
+                    dateStr = lastSmsAlert.timeString.split(' ')[0];
+                } else if (lastSmsAlert.timestamp) {
+                    const d = new Date(lastSmsAlert.timestamp);
+                    dateStr = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+                } else {
+                    dateStr = "기타";
+                }
+                list.push({
+                    key: "__lastSmsAlert__",
+                    raw: lastSmsAlert,
+                    sender: lastSmsAlert.sender || "알 수 없음",
+                    body: lastSmsAlert.body || "",
+                    keyword: lastSmsAlert.keyword || "",
+                    timestamp: lastSmsAlert.timestamp || 0,
+                    timeString: lastSmsAlert.timeString || "",
+                    dateStr: dateStr
+                });
+            }
+
+            // 최신 시간순 정렬
+            list.sort((a, b) => b.timestamp - a.timestamp);
+            currentSmsList = list;
+
+            updateSmsDateFilterOptions();
+            renderSmsList();
+        }
+
+        function updateSmsDateFilterOptions() {
+            const dateSelect = document.getElementById('smsDateFilter');
+            const currentVal = dateSelect.value;
+
+            // 일자별 카운트 계산
+            const dateCounts = {};
+            currentSmsList.forEach(item => {
+                dateCounts[item.dateStr] = (dateCounts[item.dateStr] || 0) + 1;
+            });
+            const sortedDates = Object.keys(dateCounts).sort().reverse();
+
+            dateSelect.innerHTML = `<option value="ALL">전체 일자 보기 (${currentSmsList.length}건)</option>`;
+            sortedDates.forEach(d => {
+                const opt = document.createElement('option');
+                opt.value = d;
+                opt.textContent = `${getDateDisplayLabel(d)} (${dateCounts[d]}건)`;
+                if (d === currentVal) opt.selected = true;
+                dateSelect.appendChild(opt);
+            });
+
+            if (currentVal && (currentVal === 'ALL' || dateCounts[currentVal])) {
+                dateSelect.value = currentVal;
+            } else {
+                dateSelect.value = 'ALL';
+            }
+        }
+
+        function onSmsDateFilterChange() {
+            renderSmsList();
+        }
+
+        function getDateDisplayLabel(dateStr) {
+            if (!dateStr || dateStr === "기타") return "기타";
+            const today = new Date();
+            const todayStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+            const yesterday = new Date(today);
+            yesterday.setDate(yesterday.getDate() - 1);
+            const yesterdayStr = `${yesterday.getFullYear()}-${String(yesterday.getMonth()+1).padStart(2,'0')}-${String(yesterday.getDate()).padStart(2,'0')}`;
+
+            if (dateStr === todayStr) return `${dateStr} (오늘)`;
+            if (dateStr === yesterdayStr) return `${dateStr} (어제)`;
+            return dateStr;
+        }
+
+        function renderSmsList() {
+            const container = document.getElementById('smsListContainer');
+            const totalCountBadge = document.getElementById('smsTotalCount');
+            const lastTimeSpan = document.getElementById('smsLastTime');
+            const dateSelect = document.getElementById('smsDateFilter');
+            const filterDate = dateSelect.value || 'ALL';
+
+            totalCountBadge.textContent = `총 ${currentSmsList.length}건`;
+
+            if (currentSmsList.length > 0) {
+                const latest = currentSmsList[0];
+                lastTimeSpan.textContent = `최근: ${formatRelativeTime(latest.timestamp)}`;
+            } else {
+                lastTimeSpan.textContent = "";
+            }
+
+            if (currentSmsList.length === 0) {
+                container.innerHTML = `<p style="color: #9ca3af; text-align: center; padding: 24px 0; font-size: 14px;">감지된 중요 문자가 없습니다.</p>`;
+                return;
+            }
+
+            // 필터링 적용
+            const displayItems = filterDate === 'ALL' 
+                ? currentSmsList 
+                : currentSmsList.filter(item => item.dateStr === filterDate);
+
+            if (displayItems.length === 0) {
+                container.innerHTML = `<p style="color: #9ca3af; text-align: center; padding: 20px 0; font-size: 14px;">선택한 일자에 해당하는 문자가 없습니다.</p>`;
+                return;
+            }
+
+            // 일자별 그룹화
+            const groups = {};
+            displayItems.forEach(item => {
+                if (!groups[item.dateStr]) groups[item.dateStr] = [];
+                groups[item.dateStr].push(item);
+            });
+
+            const sortedDates = Object.keys(groups).sort().reverse();
+
+            let html = "";
+            sortedDates.forEach(d => {
+                const items = groups[d];
+                const dateLabel = getDateDisplayLabel(d);
+                html += `
+                <div class="sms-date-group">
+                    <div class="sms-date-header">
+                        <span>📅 ${dateLabel} <span class="sms-badge-count" style="font-size: 11px; padding: 1px 6px;">${items.length}건</span></span>
+                        <button class="btn-date-del" onclick="deleteDateGroup('${d}')" title="${d} 일자의 문자 전체 삭제">🗑️ 이 날짜 삭제</button>
+                    </div>
+                    <div class="sms-items-list">
+                `;
+
+                items.forEach(item => {
+                    const timeDisplay = (item.timeString && item.timeString.includes(' '))
+                        ? item.timeString.split(' ')[1]
+                        : (item.timestamp ? new Date(item.timestamp).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '');
+
+                    const safeSender = escapeHtml(item.sender);
+                    const safeKeyword = escapeHtml(item.keyword);
+                    const safeBody = escapeHtml(item.body);
+
+                    html += `
+                        <div class="sms-item-card">
+                            <div class="sms-item-meta">
+                                <div>
+                                    <span class="sms-keyword-tag">[${safeKeyword}]</span>
+                                    <span class="sms-sender-text">${safeSender}</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span class="sms-time-text">${timeDisplay}</span>
+                                    <button class="btn-item-del" onclick="deleteSingleMessage('${item.key}')" title="이 문자 삭제">✕</button>
+                                </div>
+                            </div>
+                            <div class="sms-content-text">${safeBody}</div>
+                        </div>
+                    `;
+                });
+
+                html += `
+                    </div>
+                </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        async function deleteSingleMessage(key) {
+            const userSelect = document.getElementById('targetUser');
+            const userName = userSelect.value.trim();
+            if (!userName || !key) return;
+
+            if (!confirm('해당 문자를 삭제하시겠습니까?')) return;
+
+            await performDeleteKeys(userName, [key]);
+        }
+
+        async function deleteDateGroup(dateStr) {
+            const userSelect = document.getElementById('targetUser');
+            const userName = userSelect.value.trim();
+            if (!userName) return;
+
+            const targets = currentSmsList.filter(item => item.dateStr === dateStr);
+            if (targets.length === 0) return;
+
+            const label = getDateDisplayLabel(dateStr);
+            if (!confirm(`[${label}] 일자의 문자 ${targets.length}건을 모두 삭제하시겠습니까?`)) {
+                return;
+            }
+
+            await performDeleteKeys(userName, targets.map(t => t.key));
+        }
+
+        async function deleteSelectedDate() {
+            const userSelect = document.getElementById('targetUser');
+            const userName = userSelect.value.trim();
+            if (!userName) return;
+
+            const dateSelect = document.getElementById('smsDateFilter');
+            const selectedDate = dateSelect.value;
+
+            if (!selectedDate || selectedDate === 'ALL') {
+                if (currentSmsList.length === 0) {
+                    alert('삭제할 문자 내역이 없습니다.');
+                    return;
+                }
+                if (!confirm(`전체 중요 문자 내역 ${currentSmsList.length}건을 모두 삭제하시겠습니까?`)) {
+                    return;
+                }
+                await performDeleteKeys(userName, currentSmsList.map(t => t.key));
+            } else {
+                await deleteDateGroup(selectedDate);
+            }
+        }
+
+        async function performDeleteKeys(userName, keysToDelete) {
+            try {
+                const spinner = document.getElementById('spinner');
+                spinner.style.animation = 'spin 1s ease-in-out infinite';
+
+                // 1. Firebase PATCH로 null 설정하여 해당 키들 삭제
+                const updatePayload = {};
+                keysToDelete.forEach(k => {
+                    if (k && k !== "__lastSmsAlert__") {
+                        updatePayload[k] = null;
+                    }
+                });
+
+                if (Object.keys(updatePayload).length > 0) {
+                    const smsAlertsUrl = `https://father-1b787-default-rtdb.firebaseio.com/users/${encodeURIComponent(userName)}/smsAlerts.json?auth=${FIREBASE_AUTH}`;
+                    await fetch(smsAlertsUrl, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(updatePayload)
+                    });
+                }
+
+                // 2. status.lastSmsAlert 동기화 (남은 문자 중 최신것 설정, 없으면 null)
+                const remaining = currentSmsList.filter(item => !keysToDelete.includes(item.key));
+                remaining.sort((a, b) => b.timestamp - a.timestamp);
+                const newLatest = remaining.length > 0 ? remaining[0].raw : null;
+
+                const statusUrl = `https://father-1b787-default-rtdb.firebaseio.com/users/${encodeURIComponent(userName)}/status.json?auth=${FIREBASE_AUTH}`;
+                await fetch(statusUrl, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ lastSmsAlert: newLatest })
+                });
+
+                // 3. 최신 상태 새로고침
+                await fetchStatus();
+            } catch (e) {
+                console.error('삭제 처리 중 오류:', e);
+                alert('삭제 처리 중 오류가 발생했습니다: ' + e.message);
             }
         }
 
