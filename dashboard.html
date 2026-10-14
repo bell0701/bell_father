@@ -23,6 +23,11 @@
             padding: 0;
         }
 
+        html {
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+
         body {
             font-family: 'Outfit', 'Noto Sans KR', sans-serif;
             min-height: 100vh;
@@ -76,6 +81,7 @@
             margin-bottom: 8px;
             background: linear-gradient(to right, #fff, #cbd5e1);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
@@ -282,6 +288,16 @@
             </div>
         </div>
 
+        <!-- 5. 중요 문자 감지 알림 -->
+        <div class="status-card" id="smsCard">
+            <div class="icon-box">📩</div>
+            <div class="info-box" style="flex: 1;">
+                <h3>최근 중요 문자 감지</h3>
+                <p id="smsText" style="font-size: 16px;">데이터 불러오는 중...</p>
+                <div id="smsDetail" style="margin-top: 6px; font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.4; display: none; background: rgba(0,0,0,0.25); padding: 8px 12px; border-radius: 8px; word-break: break-all;"></div>
+            </div>
+        </div>
+
         <div class="footer">
             <div class="loading-spinner" id="spinner"></div>
             <span id="updateTime">데이터 연결 중...</span>
@@ -318,6 +334,8 @@
                 document.getElementById('locationText').innerHTML = `대기 중`;
                 document.getElementById('screenText').innerHTML = `대기 중`;
                 document.getElementById('monitoringText').innerHTML = `대기 중`;
+                document.getElementById('smsText').innerHTML = `대기 중`;
+                document.getElementById('smsDetail').style.display = 'none';
                 // 스피너 멈춤
                 document.getElementById('spinner').style.animation = 'none';
                 return;
@@ -386,10 +404,25 @@
                             if(scrCard) { scrCard.style.opacity = '0.4'; scrCard.style.filter = 'grayscale(100%)'; }
                         }
                     }
+                    // 중요 문자 감지 알림 업데이트
+                    const smsText = document.getElementById('smsText');
+                    const smsDetail = document.getElementById('smsDetail');
+                    if (data.lastSmsAlert) {
+                        const alert = data.lastSmsAlert;
+                        const relTime = formatRelativeTime(alert.timestamp);
+                        smsText.innerHTML = `<span style="color: #facc15; font-weight: bold;">[${alert.keyword}]</span> ${alert.sender} <span style="font-size: 13px; color: #9ca3af;">(${relTime})</span>`;
+                        smsDetail.style.display = 'block';
+                        smsDetail.textContent = alert.body;
+                    } else {
+                        smsText.innerHTML = `<span style="color: #9ca3af;">감지된 중요 문자 없음</span>`;
+                        smsDetail.style.display = 'none';
+                    }
                 } else {
                     document.getElementById('locationText').innerHTML = `데이터 없음`;
                     document.getElementById('screenText').innerHTML = `데이터 없음`;
                     document.getElementById('monitoringText').innerHTML = `데이터 없음`;
+                    document.getElementById('smsText').innerHTML = `데이터 없음`;
+                    document.getElementById('smsDetail').style.display = 'none';
                 }
 
                 // 업데이트 시간 갱신
